@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KisanVaani AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1>🌾 KisanVaani AI</h1>
+            <p>Multi-Agent Agricultural Content Generator</p>
+        </div>
+        <div class="header-right">
+            <span>5 AI Agents Active</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <button class="nav-btn active">Dashboard</button>
+    </nav>
+
+    <div class="main">
+        <div class="stats-row">
+            <div class="stat-card">
+                <p class="stat-label">Content Generated</p>
+                <h2 class="stat-value">248</h2>
+                <p class="stat-sub">+12 today</p>
+            </div>
+            <div class="stat-card warn">
+                <p class="stat-label">Active Agents</p>
+                <h2 class="stat-value">5</h2>
+                <p class="stat-sub">All running</p>
+            </div>
+            <div class="stat-card info">
+                <p class="stat-label">Languages</p>
+                <h2 class="stat-value">3</h2>
+                <p class="stat-sub">Telugu, Hindi, EN</p>
+            </div>
+            <div class="stat-card done">
+                <p class="stat-label">Farmers Reached</p>
+                <h2 class="stat-value">1.2k</h2>
+                <p class="stat-sub">via officers</p>
+            </div>
+        </div>
+
+        <div class="content-row">
+            <div class="card">
+                <h3 class="card-title">🌱 Generate Farm Content</h3>
+                <div class="input-group">
+                    <label>Farming Topic</label>
+                    <input type="text" id="topic"
+                        placeholder="e.g. Rice crop pest protection..."/>
+                </div>
+                <div class="input-group">
+                    <label>Output Language</label>
+                    <select id="language">
+                        <option>Telugu</option>
+                        <option>Hindi</option>
+                        <option>English</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Additional Context</label>
+                    <textarea id="context"
+                        placeholder="Season, region, crop type..."></textarea>
+                </div>
+                <button class="generate-btn" onclick="generateContent()">
+                    🚀 Generate Content Pipeline
+                </button>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">🤖 Agent Pipeline</h3>
+                <div class="pipeline-step">
+                    <div class="step-icon done">1</div>
+                    <div class="step-info">
+                        <p class="step-name">Research Agent</p>
+                        <p class="step-desc">Analyzes topic & gathers data</p>
+                        <div class="step-bar">
+                            <div class="step-fill" style="width:0%"
+                                id="bar1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+                <div class="pipeline-step">
+                    <div class="step-icon" id="icon2">2</div>
+                    <div class="step-info">
+                        <p class="step-name">Content Agent</p>
+                        <p class="step-desc">Generates 5 variations</p>
+                        <div class="step-bar">
+                            <div class="step-fill" style="width:0%"
+                                id="bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+                <div class="pipeline-step">
+                    <div class="step-icon" id="icon3">3</div>
+                    <div class="step-info">
+                        <p class="step-name">Optimization Agent</p>
+                        <p class="step-desc">Improves quality</p>
+                        <div class="step-bar">
+                            <div class="step-fill" style="width:0%"
+                                id="bar3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+                <div class="pipeline-step">
+                    <div class="step-icon" id="icon4">4</div>
+                    <div class="step-info">
+                        <p class="step-name">Quality Agent</p>
+                        <p class="step-desc">Verifies & approves</p>
+                        <div class="step-bar">
+                            <div class="step-fill" style="width:0%"
+                                id="bar4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+                <div class="pipeline-step">
+                    <div class="step-icon" id="icon5">5</div>
+                    <div class="step-info">
+                        <p class="step-name">Distribution Agent</p>
+                        <p class="step-desc">Plans publishing formats</p>
+                        <div class="step-bar">
+                            <div class="step-fill" style="width:0%"
+                                id="bar5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="output-card" id="output-section"
+            style="display:none">
+            <div class="output-header">
+                <h3>Generated Content</h3>
+                <span class="badge" id="status-badge">Processing...</span>
+            </div>
+
+            <div class="output-step">
+                <h4>🔍 Research</h4>
+                <p id="out-research">...</p>
+            </div>
+            <div class="output-step">
+                <h4>✍️ Content</h4>
+                <p id="out-content">...</p>
+            </div>
+            <div class="output-step">
+                <h4>⚡ Optimized</h4>
+                <p id="out-optimized">...</p>
+            </div>
+            <div class="output-step">
+                <h4>✅ Approved</h4>
+                <p id="out-approved">...</p>
+            </div>
+            <div class="output-step final">
+                <h4>📢 Final Distribution</h4>
+                <p id="out-final">...</p>
+            </div>
+            <div class="share-section" id="share-section" style="display:none">
+    <p class="share-title">📤 Share Content</p>
+    <div class="share-buttons">
+        <button class="share-btn whatsapp-btn" 
+            onclick="shareWhatsApp()">
+            📱 WhatsApp
+        </button>
+        
+        <button class="share-btn copy-btn" 
+            onclick="copyContent()">
+            📋 Copy
+        </button>
+        <button class="share-btn download-btn" 
+            onclick="downloadContent()">
+            ⬇️ Download
+        </button>
+        
+        <button class="share-btn qr-btn" 
+            onclick="showQR()">
+            📷 QR Code
+        </button>
+    </div>
+    <div id="qr-container">
+        <img id="qr-image" src="" alt="QR Code"/>
+        <p class="qr-label">Scan to share content!</p>
+    </div>
+</div>
+
+            
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>KisanVaani AI — Empowering farmers through technology</p>
+        <div class="footer-status">
+            <div class="dot"></div>
+            <span>All agents active</span>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
